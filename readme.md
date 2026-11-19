@@ -21,3 +21,7 @@ O primeiro byte impresso é 04. O computador guarda o int em little-endian, com 
 l5.c
 
 Na Ruim, a fica no offset 0, b no 4 e c no 8. Tem 3 bytes de padding depois de a e mais 3 no fim, por isso o sizeof é 12. Na Bom, b fica no 0, a no 4 e c no 5, com 2 bytes de padding só no fim, dando 8. A ordem dos campos mudou onde o compilador precisou alinhar o int.
+
+Para discutir
+
+O compilador pega os itens 2, 4 e 6, porque são erros de sintaxe e de tipo: ponto em ponteiro, comparação de struct com == e campo que não existe. Nos itens 7 e 8 o programa compila e roda, mas a explicação está nos bytes: a union compartilha o mesmo espaço, então um byte de x aparece em c e os bits de i são lidos como float. O item 11 só gera warning (-Wreturn-local-addr), porque devolve o endereço de uma variável local que morre no fim da função. A struct soma os campos e a union compartilha, e no L5 dá para ver a ordem dos campos mudando o padding: Ruim ocupa 12 bytes e Bom ocupa 8.
